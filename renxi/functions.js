@@ -37,32 +37,30 @@
 // 	};
 // })(jQuery);
 
-function timeElapse() {
-    // 起始时间设为2025年3月18日 00:00:00
-    var startDate = new Date("2025-03-18T00:00:00");
-    var current = new Date();
-    var seconds = (Date.parse(current) - Date.parse(startDate)) / 1000;
+   function timeElapse() {
+            var startDate = new Date("2025-03-18T00:00:00");
+            var current = new Date();
+            var seconds = (current - startDate) / 1000;
 
-    var days = Math.floor(seconds / (3600 * 24));
-    seconds = seconds % (3600 * 24);
+            var days = Math.floor(seconds / (3600 * 24));
+            seconds %= 3600 * 24;
 
-    var hours = Math.floor(seconds / 3600);
-    if (hours < 10) {
-        hours = "0" + hours;
-    }
+            var hours = Math.floor(seconds / 3600);
+            hours = hours < 10 ? "0" + hours : hours;
 
-    seconds = seconds % 3600;
-    var minutes = Math.floor(seconds / 60);
-    if (minutes < 10) {
-        minutes = "0" + minutes;
-    }
+            seconds %= 3600;
+            var minutes = Math.floor(seconds / 60);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
 
-    seconds = Math.floor(seconds % 60);
-    if (seconds < 10) {
-        seconds = "0" + seconds;
-    }
+            seconds = Math.floor(seconds % 60);
+            seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    var result = "第 <span class=\"digit\">" + days + "</span> 天 <span class=\"digit\">" + hours + "</span> 小时 <span class=\"digit\">" + minutes + "</span> 分钟 <span class=\"digit\">" + seconds + "</span> 秒";
-    $("#clock").html(result);
-}
+            var result = `第 <span class="digit">${days}</span> 天 <span class="digit">${hours}</span> 小时 <span class="digit">${minutes}</span> 分钟 <span class="digit">${seconds}</span> 秒`;
+            $("#clock").html(result);
+        }
+
+        $(function () {
+            timeElapse();
+            setInterval(timeElapse, 1000);
+        });
 
