@@ -68,3 +68,7 @@ function timeElapse(originalDate) {
     var result = "第 <span class=\"digit\">" + days + "</span> 天 <span class=\"digit\">" + hours + "</span> 小时 <span class=\"digit\">" + minutes + "</span> 分钟 <span class=\"digit\">" + seconds + "</span> 秒";
     $("#clock").html(result);
 }
+var startDate = new Date("2025-03-18"); // 你的起始日期
+setInterval(function() {
+    timeElapse(startDate);
+}, 1000);
