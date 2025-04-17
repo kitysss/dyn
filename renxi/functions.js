@@ -37,38 +37,32 @@ $(window).resize(function() {
 	};
 })(jQuery);
 
-function timeElapse(originalDate) {
+function timeElapse() {
+    // 起始时间设为2025年3月18日 00:00:00
+    var startDate = new Date("2025-03-18T00:00:00");
     var current = new Date();
-    
-    // 计算原始天数差
-    var secondsTotal = (Date.parse(current) - Date.parse(originalDate)) / 1000;
-    var originalDays = Math.floor(secondsTotal / (3600 * 24));
-    
-    // 如果原始天数小于 29，调整初始日期，使得天数从 29 开始
-    if (originalDays < 29) {
-        var adjustedDate = new Date(originalDate);
-        adjustedDate.setDate(adjustedDate.getDate() - (29 - originalDays));
-        secondsTotal = (Date.parse(current) - Date.parse(adjustedDate)) / 1000;
+    var seconds = (Date.parse(current) - Date.parse(startDate)) / 1000;
+
+    var days = Math.floor(seconds / (3600 * 24));
+    seconds = seconds % (3600 * 24);
+
+    var hours = Math.floor(seconds / 3600);
+    if (hours < 10) {
+        hours = "0" + hours;
     }
-    
-    // 计算天数、小时、分钟、秒
-    var days = Math.floor(secondsTotal / (3600 * 24));
-    secondsTotal = secondsTotal % (3600 * 24);
-    
-    var hours = Math.floor(secondsTotal / 3600);
-    if (hours < 10) hours = "0" + hours;
-    
-    secondsTotal = secondsTotal % 3600;
-    var minutes = Math.floor(secondsTotal / 60);
-    if (minutes < 10) minutes = "0" + minutes;
-    
-    var seconds = Math.floor(secondsTotal % 60);
-    if (seconds < 10) seconds = "0" + seconds;
-    
+
+    seconds = seconds % 3600;
+    var minutes = Math.floor(seconds / 60);
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+
+    seconds = Math.floor(seconds % 60);
+    if (seconds < 10) {
+        seconds = "0" + seconds;
+    }
+
     var result = "第 <span class=\"digit\">" + days + "</span> 天 <span class=\"digit\">" + hours + "</span> 小时 <span class=\"digit\">" + minutes + "</span> 分钟 <span class=\"digit\">" + seconds + "</span> 秒";
     $("#clock").html(result);
 }
-var startDate = new Date("2025-03-18"); // 你的起始日期
-setInterval(function() {
-    timeElapse(startDate);
-}, 1000);
+
